@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -62,7 +64,17 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  
+  const DOMelement = document.querySelectorAll(selector);
+  axios.get(`https://lambda-times-api.herokuapp.com/articles`)
+  .then((successRespons)=>{
+    const articles = successRespons.data;
+    for(let i =0; i <articles.length;i++)
+    {
+      const aNewCard = Card(articles[i]);
+      DOMelement.appendChild(aNewCard);
+    }
+
+  })
 }
 
 export { Card, cardAppender }
