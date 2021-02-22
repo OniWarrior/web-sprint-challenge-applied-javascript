@@ -36,7 +36,7 @@ const Card = (article) => {
 
   // assign values from article object.
   newHeadLine.textContent = article.headline;
-  newImage.textContent = article.authorPhoto;
+  newImage.src = article.authorPhoto;
   newAuthorName.textContent = article.authorName;
 
   // append
@@ -45,7 +45,7 @@ const Card = (article) => {
   newAuthor.appendChild(newImageContainer);
   newAuthor.appendChild(newAuthorName);
   newImageContainer.appendChild(newImage);
-
+console.log(newCard)
   newCard.addEventListener('click',function(){
     console.log(newHeadLine);
   })
@@ -64,17 +64,32 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  const DOMelement = document.querySelectorAll(selector);
-  axios.get(`https://lambda-times-api.herokuapp.com/articles`)
-  .then((successRespons)=>{
-    const articles = successRespons.data;
-    for(let i =0; i <articles.length;i++)
-    {
-      const aNewCard = Card(articles[i]);
-      DOMelement.appendChild(aNewCard);
-    }
+  const DOMelement = document.querySelector(selector);
+  axios.get("https://lambda-times-api.herokuapp.com/articles")
+  .then((successResponse)=>{
+    const javascript = successResponse.data.articles.javascript;
+    const bootstrap = successResponse.data.articles.bootstrap; 
+    const jquery = successResponse.data.articles.jquery;
+    const node = successResponse.data.articles.node;
+    const technology = successResponse.data.articles.technology;
 
-  })
-}
+    iterateThroughArticle(javascript,DOMelement);
+    iterateThroughArticle(bootstrap,DOMelement);
+    iterateThroughArticle(jquery,DOMelement);
+    iterateThroughArticle(node,DOMelement);
+    iterateThroughArticle(technology,DOMelement);   
 
+    
+  });
+ }
+
+ function iterateThroughArticle(data,DOMel){
+  for(let i = 0; i<data.length;i++)
+  {
+    const newCard = Card(data[i]);
+    DOMel.appendChild(newCard);
+  }
+
+ }
+  
 export { Card, cardAppender }

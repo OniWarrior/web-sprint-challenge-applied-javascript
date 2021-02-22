@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Tabs = (topics) => {
+const Tabs = ({topics}) => {
   // TASK 3
   // ---------------------
   // Implement this function which takes an array of strings ("topics") as its only argument.
@@ -15,29 +15,38 @@ const Tabs = (topics) => {
   //   <div class="tab">technology</div>
   // </div>
   //
-
-  // Create elements.
-  const newTopics = document.createElement('div');
+  
+  
+  // Create element
+  const newTopics = document.createElement('div');  
   const firstTopic = document.createElement('div');
   const secondTopic = document.createElement('div');
   const thirdTopic = document.createElement('div');
+  const fourthTopic = document.createElement('div');
+  const fifthTopic = document.createElement('div');
+
 
   // add classes.
   newTopics.classList.add('topics');
   firstTopic.classList.add('tab');
   secondTopic.classList.add('tab');
   thirdTopic.classList.add('tab');
+  fourthTopic.classList.add('tab');
+  fifthTopic.classList.add('tab');
 
-  // assing values from array
+  //assign
   firstTopic.textContent = topics[0];
   secondTopic.textContent = topics[1];
-  thirdTopic.textContent = topic[2];
-
-  // append
+  thirdTopic.textContent = topics[2];
+  fourthTopic.textContent = topics[3];
+  fifthTopic.textContent = topics[4];
+  
   newTopics.appendChild(firstTopic);
   newTopics.appendChild(secondTopic);
   newTopics.appendChild(thirdTopic);
-
+  newTopics.appendChild(fourthTopic);
+  newTopics.appendChild(fifthTopic);
+ 
   // return new element structure.
   return newTopics;
 }
@@ -51,12 +60,12 @@ const tabsAppender = (selector) => {
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
  const DOMelement = document.querySelector(selector);
- axios.get('https://lambda-times-api.herokuapp.com/topics')
- .then((successRespons)=>{
-   const foundTopics = Tabs(successRespons.data);
-   DOMelement.appendChild(foundTopics);
- })
-
+ axios.get("https://lambda-times-api.herokuapp.com/topics")
+ .then((successResponse)=>{
+   const newTabs = Tabs(successResponse.data);   
+   DOMelement.appendChild(newTabs);
+ });
 }
+
 
 export { Tabs, tabsAppender }
